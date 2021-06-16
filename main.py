@@ -1,4 +1,4 @@
-import sentiment_predict
+from sentiment_predict import sentiment_predict
 from flask import Flask, render_template, request
 
 from keras.preprocessing.text import Tokenizer
