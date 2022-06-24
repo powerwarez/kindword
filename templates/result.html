@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI가 알려주는 나의 언어사용 실태</title>
+  <h4 style="margin: 0 auto; width:50%;"><a href="/">돌아가기</a>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+  <script src="{{ url_for('static', filename='d3.v3.js') }}"></script>
+
+</head>
+<body>
+  <section>
+    <header>
+        <h1>AI 대화 분석 결과</h1>
+        <div class="graph"></div>
+        <script>
+            donutGraph('.graph', {{kindword_percent}});
+        </script>
+
+    <hr>
+      <ul>
+      <li>{{count_lines}}개의 문장 중 바른말이 사용된 문장 수는 <span style="background-color:#77E1B0">{{kindword_score}}개({{kindword_percent}}%)</span>입니다.</li>
+      <li>{{count_lines}}개의 문장 중 초성이 {{consonant}}개 사용되었습니다.</li>
+      </ul>
+    <hr>
+
+        <div class = 'wordcloud'>
+        <h2>AI가 분석한 <border>내가 많이 쓰는 낱말</border>입니다.</h2>
+        <img src="{{ url_for('static', filename='images/wordcloud.jpg') }}">
+        </div>
+
+    <hr>
+      <ul>
+      <li><h3>다음은 바르지 않은 말이 포함되었다고 분류된 문장들입니다.</h3></li>
+      </ul>
+    <hr>
+
+          {% for wrong_sentence in wrong_sentences %}
+          
+          <details>
+            <summary>{{wrong_sentence}}</summary>
+            <p><input class="fix" style="text-align:center; display:block; margin: 0 auto;" placeholder="위의 문장을 바르게 고쳐보세요"></p>
+          </details> 
+          
+          {% endfor %}
+      </header>
+    <hr> 
+  </section>
+
+
+</body>

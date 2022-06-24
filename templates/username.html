@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI가 알려주는 나의 언어사용 실태</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <section>
+
+      <header>
+        <h1>나의 대화명을 선택</h1>
+        <p>{{count_user}}명이 대화방에 있습니다.</p>
+        <p>다음 중 자신의 대화명을 선택하고 확인을 눌러주세요.</p>
+      </header>
+      <div id="modal-container">
+        <div class="modal-background">
+          <div class="modal">
+      
+                <span class="loader-icon"></span>
+                <span class="loader-text">AI가 대화를 분석중입니다</span> 
+      
+          </div>
+        </div>
+      </div>
+
+        <form action="/prediction" method="get">
+        <div class="content">
+        <a id="four" class="button"><button>확인</button></a>
+        </div>
+        <div id="usernameTag">
+          <ul>
+            {% for user in user_list %}
+            <li>
+              <input id="r{{loop.index}}" type="radio" name="username" value="{{user}}">
+              <label for="r{{loop.index}}" class="usernameShow">{{user}}</label>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+
+
+  </section>
+  <script src="{{ url_for('static', filename='jquery-3.6.0.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='modal.js') }}"></script>
+</body>
+</html>
