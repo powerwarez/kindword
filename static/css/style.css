@@ -40,6 +40,9 @@ body {
   overflow-x: hidden;
   padding: 0;
 }
+ad {
+	bottom: 90px;
+}
 
 footer,
 header,
