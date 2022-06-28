@@ -78,7 +78,10 @@ def render_file():
   komoNV = []
   #if os.path.isdir(upload_f):
     #shutil.rmtree(upload_f)
-  os.mkdir(upload_f)
+  if os.path.isdir(upload_f):
+    pass
+  else:
+    os.mkdir(upload_f)
 
   return render_template('home.html')
 
