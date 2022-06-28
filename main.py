@@ -5,7 +5,7 @@ from werkzeug.utils import secure_filename
 import zipfile
 import shutil
 from konlpy.tag import Mecab
-
+import random
 from collections import Counter
 
 from wordcloud import WordCloud
@@ -54,7 +54,8 @@ stopwords = ['의','가','이','은','들','는','좀','잘','걍','과','도','
 pipe = TextClassificationPipeline(model=model, tokenizer=tokenizer, return_all_scores=True)
 
 orig_path = os.getcwd()
-upload_f = orig_path+'/uploads/'
+id = random.randrange(1000,999999)
+upload_f = orig_path+'/uploads'+id+'/'
 app = Flask(__name__)
 app.config['upload_f'] = upload_f
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
@@ -75,8 +76,8 @@ def render_file():
   global komoNV
   wrong_sentences = []
   komoNV = []
-  if os.path.isdir(upload_f):
-    shutil.rmtree(upload_f)
+  #if os.path.isdir(upload_f):
+    #shutil.rmtree(upload_f)
   os.mkdir(upload_f)
 
   return render_template('home.html')
@@ -101,7 +102,7 @@ def upload_file():
         
         user_list = []
         
-        for unzip_filename in unzip_file_names[0]:
+        for unzip_filename in unzip_file_names:
           unzip_filename = upload_f + unzip_filename
           with open(unzip_filename,"r",encoding='utf-8') as f:
             lines = f.readlines()
@@ -186,18 +187,20 @@ def prediction():
     if request.method == 'GET':
       os.chdir(upload_f)
       #try:
-      txtfile_list = os.listdir()
-      for file_text in txtfile_list:
-        if file_text[-3:] != "zip":
+      txtfile_list_ori = os.listdir()
+      for file_name in txtfile_list_ori:
+        if file_name[-3:] != "zip":
+          txtfile_list.append(file_name)
+      for file_text in txtfile_list[0]:
           with open(file_text,"r",encoding='utf-8') as f:
-              lines = f.readlines()
-              score_list = list(map(lambda line : score_pre(line), lines))
-              score = sum(list(filter(None, score_list)))
-              consonant = list(map(lambda line : consonant_find(line), lines))
-              consonant = sum(list(filter(None, consonant)))
-              count_lines = list(map(lambda line : countLine(line), lines))
-              count_lines = sum(list(filter(None, count_lines)))
-              kindword_score = count_lines - score
+            lines = f.readlines()
+            score_list = list(map(lambda line : score_pre(line), lines))
+            score = sum(list(filter(None, score_list)))
+            consonant = list(map(lambda line : consonant_find(line), lines))
+            consonant = sum(list(filter(None, consonant)))
+            count_lines = list(map(lambda line : countLine(line), lines))
+            count_lines = sum(list(filter(None, count_lines)))
+            kindword_score = count_lines - score
               #print(f'score:{score}, consonant:{consonant}, count_lines:{count_lines}')
       #print(f"score:{score}, consonant:{consonant}, count_lines:{count_lines}")
       
@@ -216,7 +219,7 @@ def prediction():
     
   # 업로드 폴더 삭제
   shutil.rmtree(upload_f)
-  os.mkdir(upload_f)
+  #os.mkdir(upload_f)
   os.chdir(orig_path)
 
   # Wordcloud 만들기
