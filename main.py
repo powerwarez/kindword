@@ -54,7 +54,7 @@ stopwords = ['의','가','이','은','들','는','좀','잘','걍','과','도','
 pipe = TextClassificationPipeline(model=model, tokenizer=tokenizer, return_all_scores=True)
 
 orig_path = os.getcwd()
-id = random.randrange(1000,999999)
+id = str(random.randrange(1000,999999))
 upload_f = orig_path+'/uploads'+id+'/'
 app = Flask(__name__)
 app.config['upload_f'] = upload_f
