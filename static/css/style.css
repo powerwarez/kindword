@@ -40,8 +40,12 @@ body {
   overflow-x: hidden;
   padding: 0;
 }
+
 .kakao_ad_area {
 	bottom: 100px;
+	position: absolute; 
+	left: 50%; 
+	margin-left: -364px;
 }
 
 footer,
