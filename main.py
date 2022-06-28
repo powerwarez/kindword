@@ -96,7 +96,7 @@ def upload_file():
         unzip_file_names = []
         if filename[-3:] == "txt": #안드로이드용
           unzip_file_names.append(filename)
-          print(unzip_file_names)
+          #print(unzip_file_names)
         elif filename[-3:] == "zip": #IOS용
           myzip_r = zipfile.ZipFile(file_path, 'r')
           unzip_file_names = myzip_r.namelist()
@@ -124,7 +124,7 @@ def prediction():
   try:
     def fc_predict_score(sentence):
         value = pipe(sentence)
-        print(f'{sentence}결과는 {value}')
+        #print(f'{sentence}결과는 {value}')
         return value[0]     
     def make_wordcloud(sentence): #Mecab용 워드클라우드 함수
       for word in mecab.nouns(sentence):
@@ -135,7 +135,7 @@ def prediction():
     def score_pre(line):
         global wrong_sentences
         match_p = p.match(line)
-        print('score_pre가 실행되었습니다.')
+        #print('score_pre가 실행되었습니다.')
         if match_p:
           if match_p.group(1) == username:
             #print(f'예측할 내용은: {match_p.group(2)}')
@@ -152,7 +152,7 @@ def prediction():
               if predict_score[0]['score']< predict_score[1]['score']:
                 wrong_sentences.append(match_p.group(2))
                 result = predict_score[1]['score']
-                print(f"result 는 {result}")
+                #print(f"result 는 {result}")
                 return result
             except:
               pass  
@@ -192,11 +192,11 @@ def prediction():
       #try:
       txtfile_list=[]
       txtfile_list_ori = os.listdir()
-      print(txtfile_list_ori)
+      #print(txtfile_list_ori)
       for file_name in txtfile_list_ori:
         if file_name[-3:] != "zip":
           txtfile_list.append(file_name)
-      print(txtfile_list[0])
+      #print(txtfile_list[0])
       file_text = txtfile_list[0]
       with open(file_text,"r",encoding='utf-8') as f:
         lines = f.readlines()
