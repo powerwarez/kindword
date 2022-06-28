@@ -101,7 +101,7 @@ def upload_file():
         
         user_list = []
         
-        for unzip_filename in unzip_file_names:
+        for unzip_filename in unzip_file_names[0]:
           unzip_filename = upload_f + unzip_filename
           with open(unzip_filename,"r",encoding='utf-8') as f:
             lines = f.readlines()
@@ -116,22 +116,25 @@ def upload_file():
 
 @app.route('/prediction', methods = ['GET', 'POST'])
 def prediction():
+  
   try:
     def fc_predict_score(sentence):
         value = pipe(sentence)
-        print(f'{sentence}결과는 {value}')
+        #print(f'{sentence}결과는 {value}')
         return value[0]     
     def make_wordcloud(sentence): #Mecab용 워드클라우드 함수
       for word in mecab.nouns(sentence):
-        print(f"word는{word}")
-        komoNV.append(word)
+        if p.match(word):
+          pass
+        else:#print(f"word는{word}")
+          komoNV.append(word)
     def score_pre(line):
         global wrong_sentences
         match_p = p.match(line)
         #print('score_pre가 실행되었습니다.')
         if match_p:
           if match_p.group(1) == username:
-            print(f'예측할 내용은: {match_p.group(2)}')
+            #print(f'예측할 내용은: {match_p.group(2)}')
             make_wordcloud(match_p.group(2))
             try:
               
@@ -173,6 +176,7 @@ def prediction():
           pass
     
     username = request.args.get("username")
+    print(f"{username}의 대화를 분석합니다.")
     count_lines = 0
     consonant = 0
     score = 0
@@ -194,8 +198,8 @@ def prediction():
               count_lines = list(map(lambda line : countLine(line), lines))
               count_lines = sum(list(filter(None, count_lines)))
               kindword_score = count_lines - score
-              print(f'score:{score}, consonant:{consonant}, count_lines:{count_lines}')
-      print(f"score:{score}, consonant:{consonant}, count_lines:{count_lines}")
+              #print(f'score:{score}, consonant:{consonant}, count_lines:{count_lines}')
+      #print(f"score:{score}, consonant:{consonant}, count_lines:{count_lines}")
       
       if score == 0:
         kindword_percent = 100
@@ -224,7 +228,7 @@ def prediction():
     cloud = wc.generate_from_frequencies(dict(tags))
     # 생성된 WordCloud 저장
     cloud.to_file(orig_path+'/static/images/wordcloud.jpg')
-    print('word cloud가 저장되었습니다.')
+    #print('word cloud가 저장되었습니다.')
   else:
     pass
 
