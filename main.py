@@ -239,4 +239,4 @@ def prediction():
 
 if __name__ == '__main__':
     # 서버 실행
-    app.run(host="0.0.0.0", threaded = True)
+    app.run(debug=False, host="0.0.0.0", threaded = True)
