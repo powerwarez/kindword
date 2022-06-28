@@ -124,7 +124,7 @@ def prediction():
   try:
     def fc_predict_score(sentence):
         value = pipe(sentence)
-        #print(f'{sentence}결과는 {value}')
+        print(f'{sentence}결과는 {value}')
         return value[0]     
     def make_wordcloud(sentence): #Mecab용 워드클라우드 함수
       for word in mecab.nouns(sentence):
@@ -135,7 +135,7 @@ def prediction():
     def score_pre(line):
         global wrong_sentences
         match_p = p.match(line)
-        #print('score_pre가 실행되었습니다.')
+        print('score_pre가 실행되었습니다.')
         if match_p:
           if match_p.group(1) == username:
             #print(f'예측할 내용은: {match_p.group(2)}')
@@ -152,7 +152,7 @@ def prediction():
               if predict_score[0]['score']< predict_score[1]['score']:
                 wrong_sentences.append(match_p.group(2))
                 result = predict_score[1]['score']
-                #print(f"result 는 {result}")
+                print(f"result 는 {result}")
                 return result
             except:
               pass  
@@ -190,20 +190,23 @@ def prediction():
     if request.method == 'GET':
       os.chdir(upload_f)
       #try:
+      txtfile_list=[]
       txtfile_list_ori = os.listdir()
+      print(txtfile_list_ori)
       for file_name in txtfile_list_ori:
         if file_name[-3:] != "zip":
           txtfile_list.append(file_name)
-      for file_text in txtfile_list[0]:
-          with open(file_text,"r",encoding='utf-8') as f:
-            lines = f.readlines()
-            score_list = list(map(lambda line : score_pre(line), lines))
-            score = sum(list(filter(None, score_list)))
-            consonant = list(map(lambda line : consonant_find(line), lines))
-            consonant = sum(list(filter(None, consonant)))
-            count_lines = list(map(lambda line : countLine(line), lines))
-            count_lines = sum(list(filter(None, count_lines)))
-            kindword_score = count_lines - score
+      print(txtfile_list[0])
+      file_text = txtfile_list[0]
+      with open(file_text,"r",encoding='utf-8') as f:
+        lines = f.readlines()
+        score_list = list(map(lambda line : score_pre(line), lines))
+        score = sum(list(filter(None, score_list)))
+        consonant = list(map(lambda line : consonant_find(line), lines))
+        consonant = sum(list(filter(None, consonant)))
+        count_lines = list(map(lambda line : countLine(line), lines))
+        count_lines = sum(list(filter(None, count_lines)))
+        kindword_score = count_lines - score
               #print(f'score:{score}, consonant:{consonant}, count_lines:{count_lines}')
       #print(f"score:{score}, consonant:{consonant}, count_lines:{count_lines}")
       
