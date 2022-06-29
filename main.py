@@ -239,7 +239,8 @@ def prediction():
     wc = WordCloud(font_path = orig_path+"/data/font/NotoSansKR-Black.otf",background_color="white", max_font_size=200)
     cloud = wc.generate_from_frequencies(dict(tags))
     # 생성된 WordCloud 저장
-    cloud.to_file(orig_path+'/static/images/wordcloud.jpg')
+    cloud.to_file(orig_path+'/static/images/wordcloud' + id + '.jpg')
+    wordcloud_path = 'images/wordcloud'+id+'.jpg'
     #print('word cloud가 저장되었습니다.')
   else:
     pass
@@ -251,7 +252,8 @@ def prediction():
                           consonant_percent = consonant_percent, 
                           consonant = consonant, 
                           test_acc = test_acc, 
-                          wrong_sentences=wrong_sentences)
+                          wrong_sentences=wrong_sentences,
+                          wordcloud_path=wordcloud_path)
 
 if __name__ == '__main__':
     # 서버 실행
