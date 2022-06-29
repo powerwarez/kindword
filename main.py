@@ -200,6 +200,9 @@ def prediction():
       file_text = txtfile_list[0]
       with open(file_text,"r",encoding='utf-8') as f:
         lines = f.readlines()
+        if len(lines)>1000:
+          lines = lines[0:1000]
+        
         score_list = list(map(lambda line : score_pre(line), lines))
         score = sum(list(filter(None, score_list)))
         consonant = list(map(lambda line : consonant_find(line), lines))
