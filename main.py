@@ -228,19 +228,27 @@ def prediction():
     
   # 업로드 폴더 삭제
   shutil.rmtree(upload_f)
-  #os.mkdir(upload_f)
+
   os.chdir(orig_path)
 
   # Wordcloud 만들기
+  print("Wordcloud 만들기를 시작합니다.")
   counts = Counter(komoNV)
   tags = counts.most_common(100)
+  wordcloud_dir_path = orig_path+'/static/images/'
+
+  print(wordcloud_dir_path)
+  if not os.path.isdir(wordcloud_dir_path):
+    os.mkdir(wordcloud_dir_path)
 
   if len(tags)>0:
     wc = WordCloud(font_path = orig_path+"/data/font/NotoSansKR-Black.otf",background_color="white", max_font_size=200)
     cloud = wc.generate_from_frequencies(dict(tags))
     # 생성된 WordCloud 저장
-    cloud.to_file(orig_path+'/static/images/wordcloud' + id + '.jpg')
-    wordcloud_path = 'images/wordcloud'+id+'.jpg'
+    cloud.to_file(orig_path+'/static/images/wordcloud.jpg')
+    wordcloud_path = wordcloud_dir_path+'wordcloud.jpg'
+    # cloud.to_file(orig_path+'/static/images/wordcloud' + id + '.jpg')
+    # wordcloud_path = 'images/wordcloud'+id+'.jpg'
     #print('word cloud가 저장되었습니다.')
   else:
     pass
@@ -252,8 +260,8 @@ def prediction():
                           consonant_percent = consonant_percent, 
                           consonant = consonant, 
                           test_acc = test_acc, 
-                          wrong_sentences=wrong_sentences,
-                          wordcloud_path=wordcloud_path)
+                          wrong_sentences=wrong_sentences
+                          )
 
 if __name__ == '__main__':
     # 서버 실행

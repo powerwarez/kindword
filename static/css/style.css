@@ -43,7 +43,7 @@ body {
 
 .kakao_ad_area {
 	bottom: 100px;
-	position: absolute; 
+	position: relative; 
 	left: 50%; 
 	margin-left: -364px;
 }
