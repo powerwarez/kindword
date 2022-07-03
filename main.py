@@ -130,7 +130,7 @@ def prediction():
       for word in mecab.nouns(sentence):
         if p.match(word):
           pass
-        else:#print(f"word는{word}")
+        elif len(word)>1:#print(f"word는{word}")
           komoNV.append(word)
     def score_pre(line):
         global wrong_sentences
