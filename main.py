@@ -58,7 +58,8 @@ id = str(random.randrange(1000,999999))
 upload_f = orig_path+'/uploads'+id+'/'
 app = Flask(__name__)
 app.config['upload_f'] = upload_f
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024
+ALLOWED_EXTENSIONS = set(['txt', 'zip'])
 
 wrong_sentences = []
 komoNV = []
@@ -102,6 +103,9 @@ def upload_file():
           unzip_file_names = myzip_r.namelist()
           myzip_r.extractall(upload_f)
           myzip_r.close()
+        else:
+          return redirect("/")
+          
         
         user_list = []
         
