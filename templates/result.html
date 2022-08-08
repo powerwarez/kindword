@@ -13,9 +13,31 @@
   <section>
     <header>
         <h1>AI 대화 분석 결과</h1>
-        <div class="graph"></div>
+        <div id="myItem1" class="ldBar label-center" data-preset="circle" style="width: 50%; height: 50%"></div>
+        <style type="text/css">
+          .ldBar path.mainline {
+            stroke-width: 10;
+            stroke: #77e1b0;
+            stroke-linecap: round;
+          }
+          .ldBar path.baseline {
+            stroke-width: 10;
+            stroke: rgb(172, 172, 172);
+            stroke-linecap: round;
+          }
+          .ldBar-label {
+            color: #4b9070;
+            font-family: "varela round";
+            font-size: 5em;
+            font-weight: 1000;
+          }
+        </style>
         <script>
-            donutGraph('.graph', {{kindword_percent}});
+              /* construct manually */
+          var bar1 = new ldBar("#myItem1");
+          /* ldBar stored in the element */
+          var bar2 = document.getElementById("myItem1").ldBar;
+          bar1.set({{kindword_percent}});
         </script>
 
     <hr>
